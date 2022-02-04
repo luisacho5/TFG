@@ -28,8 +28,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
+        android:layout_weight="0.4"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -39,11 +40,12 @@
             android:textSize="25sp" />
 
         <EditText
-            android:id="@+id/email"
-            app:layout_constraintHorizontal_weight="0.5"
+            android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            app:layout_constraintHorizontal_weight="0.5" />
+
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
@@ -53,19 +55,45 @@
             android:textSize="25sp" />
 
         <EditText
-            android:id="@+id/password"
-            app:layout_constraintHorizontal_weight="0.5"
+            android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            app:layout_constraintHorizontal_weight="0.5" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login"
-            android:textSize="25sp"
-            android:textAlignment="center"
-            android:layout_gravity="center_horizontal"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/signUpButton"
+                android:layout_width="197dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.4"
+                android:text="@string/registrarse"
+                android:textAlignment="center"
+                android:textSize="25sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4" />
+
+            <Button
+                android:id="@+id/logInButton"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.4"
+                android:text="@string/login"
+                android:textAlignment="center"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TFG</string>
+    <string name="bienvenido">Bienvenido!</string>
+    <string name="correoElectronico">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="login">LOGIN</string>
+</resources>

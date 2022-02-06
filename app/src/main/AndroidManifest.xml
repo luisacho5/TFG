@@ -13,9 +13,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".Profile"
+            android:exported="false" />
+        <activity
             android:name=".Chat"
             android:exported="false"
-            android:label="CHAT"/>
+            android:label="CHAT" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

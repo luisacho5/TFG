@@ -13,11 +13,12 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var auth: FirebaseAuth
+    private val db= FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,18 +27,22 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
     fun signup(view: View) {
         val emailEditText:EditText = findViewById(R.id.emailEditText)
         val passwordEditText:EditText = findViewById(R.id.passwordEditText)
-
+        val nameEditText:EditText=findViewById(R.id.nombreEditTextView)
+        val name:String=nameEditText.text.toString()
         if(emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty()){
             FirebaseAuth.getInstance()
                 .createUserWithEmailAndPassword(emailEditText.text.toString(),
                     passwordEditText.text.toString()).addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        val homeIntent = Intent(this,Chat::class.java)
+                        db.collection("users").document(emailEditText.text.toString()).set(
+                            hashMapOf("name" to name)
+                        )
+
+                        val homeIntent = Intent(this,Profile::class.java)
+                        homeIntent.putExtra("email",emailEditText.text.toString())
                         startActivity(homeIntent)
                     }
                     else {
@@ -55,12 +60,18 @@ class MainActivity : AppCompatActivity() {
     fun login(view: View) {
         val emailEditText:EditText = findViewById(R.id.emailEditText)
         val passwordEditText:EditText = findViewById(R.id.passwordEditText)
+        val nameEditText:EditText=findViewById(R.id.nombreEditTextView)
+        val name:String=nameEditText.text.toString()
         if(emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty()){
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(emailEditText.text.toString(),
                 passwordEditText.text.toString()).addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val homeIntent = Intent(this,Chat::class.java)
+                    db.collection("users").document(emailEditText.text.toString()).set(
+                        hashMapOf("name" to name)
+                    )
+                    val homeIntent = Intent(this,Profile::class.java)
+                    homeIntent.putExtra("email",emailEditText.text.toString())
                     startActivity(homeIntent)
                 }
                 else {

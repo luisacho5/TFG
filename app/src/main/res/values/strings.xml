@@ -7,4 +7,19 @@
     <string name="input">Input</string>
     <string name="registrarse">Registrarse</string>
     <string name="nombre">Nombre</string>
+    <string name="m_sico">Músico</string>
+    <string name="productor">Productor</string>
+    <string name="sala_conciertos">Sala Conciertos</string>
+    <string name="sala_de_ensayos">Sala de Ensayos</string>
+    <string name="introduce_tu_biograf_a">Introduce tu biografía</string>
+    <string name="biograf_a">Biografía</string>
+    <string name="facebook">Facebook</string>
+    <string name="introduce_el_link_a_tu_facebook">Introduce el link a tu facebook</string>
+    <string name="selecciona_tu_rol">Selecciona tu rol</string>
+    <string name="twitter">Twitter</string>
+    <string name="introduce_tu_link_a_twitter">Introduce tu link a Twitter</string>
+    <string name="spotify">Spotify</string>
+    <string name="introduce_tu_link_a_spotify">Introduce tu link a spotify</string>
+    <string name="youtube">Youtube</string>
+    <string name="introduce_tu_youtube">Introduce tu Youtube</string>
 </resources>

@@ -37,12 +37,9 @@ class MainActivity : AppCompatActivity() {
                 .createUserWithEmailAndPassword(emailEditText.text.toString(),
                     passwordEditText.text.toString()).addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        db.collection("users").document(emailEditText.text.toString()).set(
-                            hashMapOf("name" to name)
-                        )
-
-                        val homeIntent = Intent(this,Profile::class.java)
+                        val homeIntent = Intent(this,ActivityCreateProfile::class.java)
                         homeIntent.putExtra("email",emailEditText.text.toString())
+                        homeIntent.putExtra("name",name)
                         startActivity(homeIntent)
                     }
                     else {
@@ -67,11 +64,9 @@ class MainActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(emailEditText.text.toString(),
                 passwordEditText.text.toString()).addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    db.collection("users").document(emailEditText.text.toString()).set(
-                        hashMapOf("name" to name)
-                    )
-                    val homeIntent = Intent(this,Profile::class.java)
+                    val homeIntent = Intent(this,ActivityCreateProfile::class.java)
                     homeIntent.putExtra("email",emailEditText.text.toString())
+                    homeIntent.putExtra("name",name)
                     startActivity(homeIntent)
                 }
                 else {

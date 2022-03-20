@@ -38,10 +38,12 @@
             android:label="@string/title_activity_mapa" />
         <activity
             android:name=".ActivityCreateProfile"
-            android:exported="false" />
+            android:exported="false"
+            android:label="EDITAR PERFIL"/>
         <activity
             android:name=".Profile"
-            android:exported="false" />
+            android:exported="false"
+            android:label="PERFIL"/>
         <activity
             android:name=".Chat"
             android:exported="false"

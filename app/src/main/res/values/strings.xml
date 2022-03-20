@@ -22,4 +22,9 @@
     <string name="introduce_tu_link_a_spotify">Introduce tu link a spotify</string>
     <string name="youtube">Youtube</string>
     <string name="introduce_tu_youtube">Introduce tu Youtube</string>
+    <string name="perfil">Perfil</string>
+    <string name="chat">Chat</string>
+    <string name="mapa">Mapa</string>
+    <string name="comunidad">Comunidad</string>
+    <string name="title_activity_mapa">Mapa</string>
 </resources>

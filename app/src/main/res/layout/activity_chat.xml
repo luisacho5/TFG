@@ -1,54 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:android2="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16sp"
-    android:paddingLeft="16sp"
-    android:paddingRight="16sp"
-    android:paddingTop="16sp"
     tools:context="com.example.tfg.Chat">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:clickable="true"
-        android:src="@drawable/ic_send"
-        app:fabSize="mini"
-        android:focusable="true" />
-
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/fab"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/input"
-            android:id="@+id/input"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@id/fab"
-        android:dividerHeight="16dp"
-        android:divider="@android:color/transparent"
         android:id="@+id/list_of_messages"
-        android:layout_marginBottom="16dp"
-        />
-</RelativeLayout>
+        android:layout_width="match_parent"
+        android:layout_height="622dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="16dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="358dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/input"
+            android:inputType="textShortMessage" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="true"
+            android:src="@drawable/ic_send"
+            app:fabSize="mini" />
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignBottom="@+id/fab"
+        android:background="#242424"
+        app:menu="@menu/main_menu">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</LinearLayout>

@@ -17,15 +17,17 @@
         <entry key="..\:/Users/luiss/TFG/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/luiss/TFG/app/src/main/res/drawable/ic_send.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/luiss/TFG/app/src/main/res/layout/activity_chat.xml" value="0.25" />
+        <entry key="..\:/Users/luiss/TFG/app/src/main/res/layout/activity_community.xml" value="0.2" />
         <entry key="..\:/Users/luiss/TFG/app/src/main/res/layout/activity_create_profile.xml" value="0.25" />
         <entry key="..\:/Users/luiss/TFG/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/Users/luiss/TFG/app/src/main/res/layout/activity_mapa.xml" value="0.1" />
         <entry key="..\:/Users/luiss/TFG/app/src/main/res/layout/activity_menu_app.xml" value="0.33" />
-        <entry key="..\:/Users/luiss/TFG/app/src/main/res/layout/activity_profile.xml" value="0.25" />
+        <entry key="..\:/Users/luiss/TFG/app/src/main/res/layout/activity_profile.xml" value="0.1" />
         <entry key="..\:/Users/luiss/TFG/app/src/main/res/layout/fragment_dashboard.xml" value="0.2" />
         <entry key="..\:/Users/luiss/TFG/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/luiss/TFG/app/src/main/res/layout/fragment_notifications.xml" value="0.2" />
         <entry key="..\:/Users/luiss/TFG/app/src/main/res/layout/message.xml" value="0.3625" />
+        <entry key="..\:/Users/luiss/TFG/app/src/main/res/layout/user_item.xml" value="0.2" />
         <entry key="..\:/Users/luiss/TFG/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
         <entry key="..\:/Users/luiss/TFG/app/src/main/res/menu/main_menu.xml" value="0.1" />
       </map>

@@ -64,7 +64,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                     true
                 }
                 R.id.comunidad->{
-                    val homeIntent = Intent(this,Chat::class.java)
+                    val homeIntent = Intent(this,Community::class.java)
                     homeIntent.putExtra("email",email)
                     homeIntent.putExtra("name",name)
                     startActivity(homeIntent)

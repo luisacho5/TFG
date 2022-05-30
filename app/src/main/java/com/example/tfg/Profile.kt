@@ -4,9 +4,11 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -26,6 +28,8 @@ class Profile : AppCompatActivity() {
         val twitterImg: ImageView = findViewById(R.id.imageEmail)
         val email: String? = intent.getStringExtra("email")
         val name: String? = intent.getStringExtra("name")
+        val flag: Boolean? = intent.getBooleanExtra("flag",false)
+
         if (email != null) {
             db.collection("users").document(email).get().addOnSuccessListener {
                 textViewName.setText(it.get("name") as String?)
@@ -77,7 +81,7 @@ class Profile : AppCompatActivity() {
                     true
                 }
                 R.id.comunidad->{
-                    val homeIntent = Intent(this,Chat::class.java)
+                    val homeIntent = Intent(this,Community::class.java)
                     homeIntent.putExtra("email",email)
                     homeIntent.putExtra("name",textViewName.text)
                     startActivity(homeIntent)
@@ -94,6 +98,9 @@ class Profile : AppCompatActivity() {
         }
 
         val editImg: ImageView =findViewById(R.id.editImage)
+        if(flag == true){
+            editImg.visibility= View.INVISIBLE
+        }
         editImg.setOnClickListener{
             val homeIntent = Intent(this,ActivityCreateProfile::class.java)
             homeIntent.putExtra("email",email)

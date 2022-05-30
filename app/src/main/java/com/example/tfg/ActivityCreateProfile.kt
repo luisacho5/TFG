@@ -58,6 +58,7 @@ class ActivityCreateProfile : AppCompatActivity() {
             }
               db.collection("users").document(email).set(
                   hashMapOf(
+                      "email" to email,
                       "name" to textViewName.text.toString(),
                       "rol" to rol,
                       "biografia" to biotxt,

@@ -25,7 +25,7 @@ class Profile : AppCompatActivity() {
         val youtubeImg: ImageView = findViewById(R.id.imageView8)
         val twitterImg: ImageView = findViewById(R.id.imageEmail)
         val email: String? = intent.getStringExtra("email")
-
+        val name: String? = intent.getStringExtra("name")
         if (email != null) {
             db.collection("users").document(email).get().addOnSuccessListener {
                 textViewName.setText(it.get("name") as String?)
@@ -91,6 +91,14 @@ class Profile : AppCompatActivity() {
                     true
                 }
             }
+        }
+
+        val editImg: ImageView =findViewById(R.id.editImage)
+        editImg.setOnClickListener{
+            val homeIntent = Intent(this,ActivityCreateProfile::class.java)
+            homeIntent.putExtra("email",email)
+            homeIntent.putExtra("name",name)
+            startActivity(homeIntent)
         }
     }
 }

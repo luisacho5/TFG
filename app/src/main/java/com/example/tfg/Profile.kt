@@ -48,7 +48,7 @@ class Profile : AppCompatActivity() {
                     startActivity(i3)
                 }
 
-                val yt:Uri  = Uri.parse(it.get("twitter") as String?)
+                val yt:Uri  = Uri.parse(it.get("youtube") as String?)
                 val i4= Intent(Intent.ACTION_VIEW,yt)
                 youtubeImg.setOnClickListener{
                     startActivity(i4)

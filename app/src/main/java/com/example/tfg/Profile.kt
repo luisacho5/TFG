@@ -1,9 +1,11 @@
 package com.example.tfg
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
@@ -18,14 +20,44 @@ class Profile : AppCompatActivity() {
        val textViewName : TextView = findViewById(R.id.textViewName)
         val textViewRol: TextView=findViewById(R.id.textViewRol)
         val textViewBio: TextView=findViewById(R.id.textViewBio)
+        val facebookImg: ImageView = findViewById(R.id.imageFacebook)
+        val spotifyImg: ImageView = findViewById(R.id.imageView7)
+        val youtubeImg: ImageView = findViewById(R.id.imageView8)
+        val twitterImg: ImageView = findViewById(R.id.imageEmail)
         val email: String? = intent.getStringExtra("email")
 
         if (email != null) {
             db.collection("users").document(email).get().addOnSuccessListener {
                 textViewName.setText(it.get("name") as String?)
+
+                val facebook:Uri  = Uri.parse(it.get("facebook") as String?)
+                val i = Intent(Intent.ACTION_VIEW,facebook)
+                facebookImg.setOnClickListener{
+                    startActivity(i)
+                }
+
+                val spotify:Uri  = Uri.parse(it.get("spotify") as String?)
+                val i2 = Intent(Intent.ACTION_VIEW,spotify)
+                spotifyImg.setOnClickListener{
+                    startActivity(i2)
+                }
+
+                val twitter:Uri  = Uri.parse(it.get("twitter") as String?)
+                val i3 = Intent(Intent.ACTION_VIEW,twitter)
+                twitterImg.setOnClickListener{
+                    startActivity(i3)
+                }
+
+                val yt:Uri  = Uri.parse(it.get("twitter") as String?)
+                val i4= Intent(Intent.ACTION_VIEW,yt)
+                youtubeImg.setOnClickListener{
+                    startActivity(i4)
+                }
+
                 textViewRol.setText(it.get("rol") as String?)
                 textViewBio.setText(it.get("biografia")as String?)
             }
+
         }
         val navigation: BottomNavigationView = findViewById(R.id.menu)
         navigation.setOnItemSelectedListener {item ->

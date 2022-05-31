@@ -30,7 +30,7 @@ class ActivityCreateProfile : AppCompatActivity() {
 
 
         db.collection("users").document(email).get().addOnSuccessListener {
-            textViewName.setText(it.get("name") as String?)
+            it.get("name") as String?
             spotify.setText(it.get("spotify") as String?)
             twitter.setText(it.get("twitter") as String?)
             youtube.setText(it.get("youtube") as String?)
@@ -52,14 +52,14 @@ class ActivityCreateProfile : AppCompatActivity() {
             } else if(musico.isChecked)
                 "musico"
             else if(conciertos.isChecked)
-                "concierto"
+                "sala"
             else{
                 "ensayo"
             }
               db.collection("users").document(email).set(
                   hashMapOf(
                       "email" to email,
-                      "name" to textViewName.text.toString(),
+                      "name" to name,
                       "rol" to rol,
                       "biografia" to biotxt,
                       "facebook" to fbtxt,

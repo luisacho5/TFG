@@ -9,6 +9,8 @@ data class User(val email:String,
                 val facebook: String,
                 val twitter:String,
                 val spotify:String,
-                val youtube:String){
-    constructor() : this("","","","","","","","")
+                val youtube:String,
+                val latitud:Double,
+                val longitud: Double){
+    constructor() : this("","","","","","","","",0.0,0.0)
 }

@@ -6,11 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import android.media.audiofx.Equalizer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -26,13 +28,15 @@ import com.example.tfg.databinding.ActivityMapaBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.*
 
-class Mapa : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
+class Mapa : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
 
     private lateinit var map: GoogleMap
     private lateinit var binding: ActivityMapaBinding
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-
+    private val db= FirebaseFirestore.getInstance()
+    private var email:String? = null
+    private var name: String? = null
 
     companion object{
         const val LOCATION_REQUEST_CODE = 0
@@ -42,8 +46,8 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButt
         super.onCreate(savedInstanceState)
         binding = ActivityMapaBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val email: String? = intent.getStringExtra("email")
-        val name: String? = intent.getStringExtra("name")
+        email = intent.getStringExtra("email")
+        name = intent.getStringExtra("name")
         createFragment()
         val navigation: BottomNavigationView = findViewById(R.id.menu)
         navigation.setOnItemSelectedListener { item ->
@@ -84,10 +88,10 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButt
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        createMarker()
         map.setOnMyLocationButtonClickListener(this)
         map.setOnMyLocationClickListener(this)
         enableLocation()
+        initialize()
     }
 
     private fun createFragment() {
@@ -97,9 +101,8 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButt
     }
 
 
-    private fun createMarker() {
-        val coordinates = LatLng(28.043839, -16.539)
-        val marker = MarkerOptions().position(coordinates).title("La playita")
+    private fun createMarker(coordenadas:LatLng,nombre:String) {
+        val marker = MarkerOptions().position(coordenadas).title(nombre)
         map.addMarker(marker)
 
     }
@@ -111,6 +114,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButt
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
+    @SuppressLint("MissingPermission")
     private fun enableLocation(){
         if(!::map.isInitialized) return
         if(isLocationPermissionGranted()){
@@ -128,6 +132,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButt
         }
     }
 
+    @SuppressLint("MissingPermission")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -143,6 +148,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButt
         }
     }
 
+    @SuppressLint("MissingPermission")
     override fun onResumeFragments() {
         super.onResumeFragments()
         if (!::map.isInitialized) return
@@ -157,6 +163,35 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButt
     }
 
     override fun onMyLocationClick(p0: Location) {
+        email?.let {
+            db.collection("users").document(it)
+                .update(mapOf(
+                    "latitud" to p0.latitude,
+                    "longitud" to p0.longitude
+                ))
+
+        }
+    }
+
+    private fun initialize() {
+        db.collection("users")
+            .addSnapshotListener(object: EventListener<QuerySnapshot> {
+                override fun onEvent(
+                    value: QuerySnapshot?,
+                    error: FirebaseFirestoreException?
+                ) {
+                    if(error !=null){
+                        Log.e("Firestore error", error.message.toString())
+                        return
+                    }
+                    for (dc : DocumentChange in value?.documentChanges!!){
+                        if(dc.type == DocumentChange.Type.ADDED){
+                           val user=dc.document.toObject(User::class.java)
+                            createMarker(LatLng(user.latitud,user.longitud),user.name)
+                        }
+                    }
+                }
+            } )
     }
 
 }

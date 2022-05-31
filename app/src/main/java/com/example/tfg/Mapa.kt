@@ -27,10 +27,11 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.example.tfg.databinding.ActivityMapaBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.Marker
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.*
 
-class Mapa : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
+class Mapa : AppCompatActivity(), GoogleMap.OnMarkerClickListener, OnMapReadyCallback,GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
 
     private lateinit var map: GoogleMap
     private lateinit var binding: ActivityMapaBinding
@@ -92,6 +93,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMyLocationButto
         map.setOnMyLocationClickListener(this)
         enableLocation()
         initialize()
+        map.setOnMarkerClickListener(this)
     }
 
     private fun createFragment() {
@@ -101,9 +103,12 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMyLocationButto
     }
 
 
-    private fun createMarker(coordenadas:LatLng,nombre:String) {
+    private fun createMarker(coordenadas:LatLng,nombre:String,user:User) {
         val marker = MarkerOptions().position(coordenadas).title(nombre)
-        map.addMarker(marker)
+        val mark = map.addMarker(marker)
+        if (mark != null) {
+            mark.tag=user
+        }
 
     }
 
@@ -188,12 +193,24 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMyLocationButto
                         if(dc.type == DocumentChange.Type.ADDED){
                            val user=dc.document.toObject(User::class.java)
                             if(!user.name.equals(name)) {
-                                createMarker(LatLng(user.latitud, user.longitud), user.name)
+                                createMarker(LatLng(user.latitud, user.longitud), user.name,user)
                             }
                         }
                     }
                 }
             } )
+    }
+
+    override fun onMarkerClick(p0: Marker): Boolean {
+        val user:User= p0.tag as User
+        val homeIntent = Intent(this, Profile::class.java)
+        homeIntent.putExtra("email", user.email)
+        homeIntent.putExtra("view",email)
+        homeIntent.putExtra("viewname",name)
+        homeIntent.putExtra("name", user.name)
+        homeIntent.putExtra("flag",true)
+        startActivity(homeIntent)
+        return true
     }
 
 }

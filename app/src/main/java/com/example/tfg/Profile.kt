@@ -26,9 +26,10 @@ class Profile : AppCompatActivity() {
         val spotifyImg: ImageView = findViewById(R.id.imageView7)
         val youtubeImg: ImageView = findViewById(R.id.imageView8)
         val twitterImg: ImageView = findViewById(R.id.imageEmail)
-        val email: String? = intent.getStringExtra("email")
-        val name: String? = intent.getStringExtra("name")
+        var email: String? = intent.getStringExtra("email")
+        var name: String? = intent.getStringExtra("name")
         val flag: Boolean? = intent.getBooleanExtra("flag",false)
+        val editImg: ImageView =findViewById(R.id.editImage)
 
         if (email != null) {
             db.collection("users").document(email).get().addOnSuccessListener {
@@ -62,6 +63,11 @@ class Profile : AppCompatActivity() {
                 textViewBio.setText(it.get("biografia")as String?)
             }
 
+        }
+        if(flag == true){
+            editImg.visibility= View.INVISIBLE
+            email= intent.getStringExtra("view")
+            name= intent.getStringExtra("viewname")
         }
         val navigation: BottomNavigationView = findViewById(R.id.menu)
         navigation.setOnItemSelectedListener {item ->
@@ -97,10 +103,7 @@ class Profile : AppCompatActivity() {
             }
         }
 
-        val editImg: ImageView =findViewById(R.id.editImage)
-        if(flag == true){
-            editImg.visibility= View.INVISIBLE
-        }
+
         editImg.setOnClickListener{
             val homeIntent = Intent(this,ActivityCreateProfile::class.java)
             homeIntent.putExtra("email",email)

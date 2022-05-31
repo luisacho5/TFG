@@ -16,11 +16,22 @@
         tools:layout_editor_absoluteY="1dp">
 
         <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id/textView1"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/nombre"
             android:textColor="#000000"
-            android:textSize="48sp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/introduce_tu_nombre"
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
 
         <TextView
             android:id="@+id/textView6"
@@ -164,7 +175,8 @@
             android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/registrarse" />
+            android:text="@string/guardar"
+            android:background="@drawable/bordes_redondos"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

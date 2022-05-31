@@ -27,4 +27,6 @@
     <string name="mapa">Mapa</string>
     <string name="comunidad">Comunidad</string>
     <string name="title_activity_mapa">Mapa</string>
+    <string name="introduce_tu_nombre">Introduce tu nombre</string>
+    <string name="guardar">GUARDAR</string>
 </resources>

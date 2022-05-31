@@ -17,10 +17,9 @@ class ActivityCreateProfile : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_profile)
-        val textViewName : TextView = findViewById(R.id.textViewName)
         email= intent.getStringExtra("email").toString()
         name= intent.getStringExtra("name").toString()
-        textViewName.setText(name as String?)
+        val nameView: TextView = findViewById(R.id.name)
         val button:Button=findViewById(R.id.submitButton)
         val bio : TextView = findViewById(R.id.infoUser)
         val facebook : TextView = findViewById(R.id.facebookUser)
@@ -30,7 +29,7 @@ class ActivityCreateProfile : AppCompatActivity() {
 
 
         db.collection("users").document(email).get().addOnSuccessListener {
-            it.get("name") as String?
+            nameView.setText(it.get("name") as String?)
             spotify.setText(it.get("spotify") as String?)
             twitter.setText(it.get("twitter") as String?)
             youtube.setText(it.get("youtube") as String?)
@@ -39,6 +38,7 @@ class ActivityCreateProfile : AppCompatActivity() {
         }
 
         button.setOnClickListener {
+            name=nameView.text.toString()
             val yttxt=youtube.text.toString()
             val spotifytxt=spotify.text.toString()
             val twtrtxt= twitter.text.toString()
@@ -69,7 +69,7 @@ class ActivityCreateProfile : AppCompatActivity() {
               )
             val homeIntent = Intent(this,Profile::class.java)
             homeIntent.putExtra("email",email)
-            homeIntent.putExtra("name",textViewName.text.toString())
+            homeIntent.putExtra("name",name)
             startActivity(homeIntent)
         }
     }

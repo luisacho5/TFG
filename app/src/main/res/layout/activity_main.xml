@@ -44,7 +44,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            app:layout_constraintHorizontal_weight="0.5" />
+            android:minHeight="48dp"
+            app:layout_constraintHorizontal_weight="0.5"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/textView3"
@@ -59,22 +61,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            app:layout_constraintHorizontal_weight="0.5" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nombre"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/nombreEditTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintHorizontal_weight="0.5" />
-
+            android:minHeight="48dp"
+            app:layout_constraintHorizontal_weight="0.5"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,7 +80,9 @@
                 android:onClick="signup"
                 android:text="@string/registrarse"
                 android:textAlignment="center"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:backgroundTint="@color/black"
+                android:background="@drawable/bordes_redondos"/>
 
             <Space
                 android:layout_width="wrap_content"
@@ -107,7 +98,9 @@
                 android:onClick="login"
                 android:text="@string/login"
                 android:textAlignment="center"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:backgroundTint="@color/black"
+                android:background="@drawable/bordes_redondos"/>
 
         </LinearLayout>
 

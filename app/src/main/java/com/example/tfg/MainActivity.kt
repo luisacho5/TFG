@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
     fun signup(view: View) {
         val emailEditText:EditText = findViewById(R.id.emailEditText)
         val passwordEditText:EditText = findViewById(R.id.passwordEditText)
-        val nameEditText:EditText=findViewById(R.id.nombreEditTextView)
-        val name:String=nameEditText.text.toString()
         if(emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty()){
             FirebaseAuth.getInstance()
                 .createUserWithEmailAndPassword(emailEditText.text.toString(),
@@ -39,7 +37,6 @@ class MainActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         val homeIntent = Intent(this,ActivityCreateProfile::class.java)
                         homeIntent.putExtra("email",emailEditText.text.toString())
-                        homeIntent.putExtra("name",name)
                         startActivity(homeIntent)
                     }
                     else {
@@ -57,8 +54,6 @@ class MainActivity : AppCompatActivity() {
     fun login(view: View) {
         val emailEditText:EditText = findViewById(R.id.emailEditText)
         val passwordEditText:EditText = findViewById(R.id.passwordEditText)
-        val nameEditText:EditText=findViewById(R.id.nombreEditTextView)
-        val name:String=nameEditText.text.toString()
         if(emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty()){
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(emailEditText.text.toString(),
@@ -66,7 +61,6 @@ class MainActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val homeIntent = Intent(this,Profile::class.java)
                     homeIntent.putExtra("email",emailEditText.text.toString())
-                    homeIntent.putExtra("name",name)
                     startActivity(homeIntent)
                 }
                 else {

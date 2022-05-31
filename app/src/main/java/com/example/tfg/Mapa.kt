@@ -82,8 +82,6 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButt
 
     }
 
-
-
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         createMarker()
@@ -103,11 +101,6 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButt
         val coordinates = LatLng(28.043839, -16.539)
         val marker = MarkerOptions().position(coordinates).title("La playita")
         map.addMarker(marker)
-        map.animateCamera(
-            CameraUpdateFactory.newLatLng(coordinates),
-            4000,
-            null
-        )
 
     }
 

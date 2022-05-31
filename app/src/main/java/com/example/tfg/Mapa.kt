@@ -187,7 +187,9 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMyLocationButto
                     for (dc : DocumentChange in value?.documentChanges!!){
                         if(dc.type == DocumentChange.Type.ADDED){
                            val user=dc.document.toObject(User::class.java)
-                            createMarker(LatLng(user.latitud,user.longitud),user.name)
+                            if(!user.name.equals(name)) {
+                                createMarker(LatLng(user.latitud, user.longitud), user.name)
+                            }
                         }
                     }
                 }

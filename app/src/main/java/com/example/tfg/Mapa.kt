@@ -38,6 +38,8 @@ class Mapa : AppCompatActivity(), GoogleMap.OnMarkerClickListener, OnMapReadyCal
     private val db= FirebaseFirestore.getInstance()
     private var email:String? = null
     private var name: String? = null
+    private var latitude:Double = 0.0
+    private var longitude:Double = 0.0
 
     companion object{
         const val LOCATION_REQUEST_CODE = 0
@@ -87,6 +89,7 @@ class Mapa : AppCompatActivity(), GoogleMap.OnMarkerClickListener, OnMapReadyCal
 
     }
 
+    @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         map.setOnMyLocationButtonClickListener(this)
@@ -94,6 +97,7 @@ class Mapa : AppCompatActivity(), GoogleMap.OnMarkerClickListener, OnMapReadyCal
         enableLocation()
         initialize()
         map.setOnMarkerClickListener(this)
+
     }
 
     private fun createFragment() {
@@ -124,6 +128,16 @@ class Mapa : AppCompatActivity(), GoogleMap.OnMarkerClickListener, OnMapReadyCal
         if(!::map.isInitialized) return
         if(isLocationPermissionGranted()){
             map.isMyLocationEnabled= true
+            val lm = getSystemService(LOCATION_SERVICE) as LocationManager
+            val location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            longitude = location!!.longitude
+            latitude = location!!.latitude
+            email?.let {
+                db.collection("users").document(it)
+                    .update("latitud",latitude)
+                db.collection("users").document(it)
+                    .update("longitud", longitude)
+            }
             }else{
             askPermissions()
         }
@@ -164,17 +178,21 @@ class Mapa : AppCompatActivity(), GoogleMap.OnMarkerClickListener, OnMapReadyCal
     }
 
     override fun onMyLocationButtonClick(): Boolean {
+        email?.let {
+            db.collection("users").document(it)
+                .update("latitud",latitude)
+            db.collection("users").document(it)
+                .update("longitud", longitude)
+        }
         return false
     }
 
     override fun onMyLocationClick(p0: Location) {
         email?.let {
             db.collection("users").document(it)
-                .update(mapOf(
-                    "latitud" to p0.latitude,
-                    "longitud" to p0.longitude
-                ))
-
+                .update("latitud",p0.latitude)
+            db.collection("users").document(it)
+                .update("longitud", p0.longitude)
         }
     }
 

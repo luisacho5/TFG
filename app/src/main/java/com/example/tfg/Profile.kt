@@ -5,16 +5,16 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.isVisible
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class Profile : AppCompatActivity() {
     private val db= FirebaseFirestore.getInstance()
-
+    private val user= Firebase.auth.currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,77 +26,67 @@ class Profile : AppCompatActivity() {
         val spotifyImg: ImageView = findViewById(R.id.imageView7)
         val youtubeImg: ImageView = findViewById(R.id.imageView8)
         val twitterImg: ImageView = findViewById(R.id.imageEmail)
-        var email: String? = intent.getStringExtra("email")
-        var name: String? = intent.getStringExtra("name")
-        val flag: Boolean? = intent.getBooleanExtra("flag",false)
-        val editImg: ImageView =findViewById(R.id.editImage)
+        val editImg: ImageView = findViewById(R.id.editImage)
+        if(user !=null) {
+            var email: String? = user.email
+            email?.let {
+                db.collection("users").document(it).get().addOnSuccessListener {
+                    textViewName.setText(it.get("name") as String?)
 
-        if (email != null) {
-            db.collection("users").document(email).get().addOnSuccessListener {
-                textViewName.setText(it.get("name") as String?)
+                    val facebook: Uri = Uri.parse(it.get("facebook") as String?)
+                    val i = Intent(Intent.ACTION_VIEW, facebook)
+                    facebookImg.setOnClickListener {
+                        startActivity(i)
+                    }
 
-                val facebook:Uri  = Uri.parse(it.get("facebook") as String?)
-                val i = Intent(Intent.ACTION_VIEW,facebook)
-                facebookImg.setOnClickListener{
-                    startActivity(i)
+                    val spotify: Uri = Uri.parse(it.get("spotify") as String?)
+                    val i2 = Intent(Intent.ACTION_VIEW, spotify)
+                    spotifyImg.setOnClickListener {
+                        startActivity(i2)
+                    }
+
+                    val twitter: Uri = Uri.parse(it.get("twitter") as String?)
+                    val i3 = Intent(Intent.ACTION_VIEW, twitter)
+                    twitterImg.setOnClickListener {
+                        startActivity(i3)
+                    }
+
+                    val yt: Uri = Uri.parse(it.get("youtube") as String?)
+                    val i4 = Intent(Intent.ACTION_VIEW, yt)
+                    youtubeImg.setOnClickListener {
+                        startActivity(i4)
+                    }
+
+                    textViewRol.setText(it.get("rol") as String?)
+                    textViewBio.setText(it.get("biografia") as String?)
                 }
-
-                val spotify:Uri  = Uri.parse(it.get("spotify") as String?)
-                val i2 = Intent(Intent.ACTION_VIEW,spotify)
-                spotifyImg.setOnClickListener{
-                    startActivity(i2)
-                }
-
-                val twitter:Uri  = Uri.parse(it.get("twitter") as String?)
-                val i3 = Intent(Intent.ACTION_VIEW,twitter)
-                twitterImg.setOnClickListener{
-                    startActivity(i3)
-                }
-
-                val yt:Uri  = Uri.parse(it.get("youtube") as String?)
-                val i4= Intent(Intent.ACTION_VIEW,yt)
-                youtubeImg.setOnClickListener{
-                    startActivity(i4)
-                }
-
-                textViewRol.setText(it.get("rol") as String?)
-                textViewBio.setText(it.get("biografia")as String?)
             }
+        }
 
-        }
-        if(flag == true){
-            editImg.visibility= View.INVISIBLE
-            email= intent.getStringExtra("view")
-            name= intent.getStringExtra("viewname")
-        }
         val navigation: BottomNavigationView = findViewById(R.id.menu)
         navigation.setOnItemSelectedListener {item ->
             when(item.itemId){
                 R.id.profile->{
                     val homeIntent = Intent(this,Profile::class.java)
-                    homeIntent.putExtra("email",email)
-                    homeIntent.putExtra("name",textViewName.text)
                     startActivity(homeIntent)
                     true
                 }
                 R.id.chat->{
                     val homeIntent = Intent(this,Chat::class.java)
-                    homeIntent.putExtra("email",email)
+                    homeIntent.putExtra("email",user!!.email)
                     homeIntent.putExtra("name",textViewName.text)
                     startActivity(homeIntent)
                     true
                 }
                 R.id.comunidad->{
                     val homeIntent = Intent(this,Community::class.java)
-                    homeIntent.putExtra("email",email)
+                    homeIntent.putExtra("email",user!!.email)
                     homeIntent.putExtra("name",textViewName.text)
                     startActivity(homeIntent)
                     true
                 }
                 else->{
                     val homeIntent = Intent(this,Mapa::class.java)
-                    homeIntent.putExtra("email",email)
-                    homeIntent.putExtra("name",textViewName.text)
                     startActivity(homeIntent)
                     true
                 }
@@ -106,9 +96,13 @@ class Profile : AppCompatActivity() {
 
         editImg.setOnClickListener{
             val homeIntent = Intent(this,ActivityCreateProfile::class.java)
-            homeIntent.putExtra("email",email)
-            homeIntent.putExtra("name",name)
             startActivity(homeIntent)
         }
+    }
+
+    fun cerrarSesion(view: View) {
+        Firebase.auth.signOut()
+        val homeIntent = Intent(this,MainActivity::class.java)
+        startActivity(homeIntent)
     }
 }

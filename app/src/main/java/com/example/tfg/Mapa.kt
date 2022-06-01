@@ -2,40 +2,34 @@ package com.example.tfg
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
-import android.media.audiofx.Equalizer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
-
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.tfg.databinding.ActivityMapaBinding
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.*
+import com.google.firebase.ktx.Firebase
 
 class Mapa : AppCompatActivity(), GoogleMap.OnMarkerClickListener, OnMapReadyCallback,GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
 
     private lateinit var map: GoogleMap
     private lateinit var binding: ActivityMapaBinding
     private val db= FirebaseFirestore.getInstance()
+    private val user= Firebase.auth.currentUser
     private var email:String? = null
     private var name: String? = null
     private var latitude:Double = 0.0
@@ -49,16 +43,14 @@ class Mapa : AppCompatActivity(), GoogleMap.OnMarkerClickListener, OnMapReadyCal
         super.onCreate(savedInstanceState)
         binding = ActivityMapaBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        email = intent.getStringExtra("email")
-        name = intent.getStringExtra("name")
+        email = user!!.email
+        name = user.displayName
         createFragment()
         val navigation: BottomNavigationView = findViewById(R.id.menu)
         navigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.profile -> {
                     val homeIntent = Intent(this, Profile::class.java)
-                    homeIntent.putExtra("email", email)
-                    homeIntent.putExtra("name", name)
                     startActivity(homeIntent)
                     true
                 }
@@ -71,15 +63,11 @@ class Mapa : AppCompatActivity(), GoogleMap.OnMarkerClickListener, OnMapReadyCal
                 }
                 R.id.comunidad -> {
                     val homeIntent = Intent(this, Community::class.java)
-                    homeIntent.putExtra("email", email)
-                    homeIntent.putExtra("name", name)
                     startActivity(homeIntent)
                     true
                 }
                 else -> {
                     val homeIntent = Intent(this, Mapa::class.java)
-                    homeIntent.putExtra("email", email)
-                    homeIntent.putExtra("name", name)
                     startActivity(homeIntent)
                     true
                 }
@@ -221,12 +209,9 @@ class Mapa : AppCompatActivity(), GoogleMap.OnMarkerClickListener, OnMapReadyCal
 
     override fun onMarkerClick(p0: Marker): Boolean {
         val user:User= p0.tag as User
-        val homeIntent = Intent(this, Profile::class.java)
+        val homeIntent = Intent(this, ShowProfile::class.java)
         homeIntent.putExtra("email", user.email)
-        homeIntent.putExtra("view",email)
-        homeIntent.putExtra("viewname",name)
         homeIntent.putExtra("name", user.name)
-        homeIntent.putExtra("flag",true)
         startActivity(homeIntent)
         return true
     }

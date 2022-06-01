@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:text="TextView"
                     android:textColor="#000000"
-                    android:textSize="48sp" />
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/textViewRol"
@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:text="TextView"
                     android:textColor="#000000"
-                    android:textSize="34sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <ImageView
@@ -135,6 +135,15 @@
                 app:srcCompat="@drawable/ic_video" />
 
         </LinearLayout>
+            <Button
+                android:id="@+id/cerrarsesion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cerrar sesion"
+                android:layout_gravity="center_horizontal"
+                android:textSize="45sp"
+                android:onClick="cerrarSesion"
+                android:background="@drawable/bordes_redondos"/>
         </LinearLayout>
     </ScrollView>
 

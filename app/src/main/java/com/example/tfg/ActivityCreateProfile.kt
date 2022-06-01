@@ -8,7 +8,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.TextView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 class ActivityCreateProfile : AppCompatActivity() {
     private val db= FirebaseFirestore.getInstance()
@@ -17,8 +20,6 @@ class ActivityCreateProfile : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_profile)
-        email= intent.getStringExtra("email").toString()
-        name= intent.getStringExtra("name").toString()
         val nameView: TextView = findViewById(R.id.name)
         val button:Button=findViewById(R.id.submitButton)
         val bio : TextView = findViewById(R.id.infoUser)
@@ -27,14 +28,19 @@ class ActivityCreateProfile : AppCompatActivity() {
         val spotify : TextView = findViewById(R.id.spotifyUser)
         val youtube : TextView = findViewById(R.id.youtubeUser)
 
-
-        db.collection("users").document(email).get().addOnSuccessListener {
-            nameView.setText(it.get("name") as String?)
-            spotify.setText(it.get("spotify") as String?)
-            twitter.setText(it.get("twitter") as String?)
-            youtube.setText(it.get("youtube") as String?)
-            facebook.setText(it.get("facebook") as String?)
-            bio.setText(it.get("biografia")as String?)
+        val user = Firebase.auth.currentUser
+        if (user != null) {
+            user.email?.let {
+                db.collection("users").document(it).get().addOnSuccessListener {
+                    nameView.setText(it.get("name") as String?)
+                    spotify.setText(it.get("spotify") as String?)
+                    twitter.setText(it.get("twitter") as String?)
+                    youtube.setText(it.get("youtube") as String?)
+                    facebook.setText(it.get("facebook") as String?)
+                    bio.setText(it.get("biografia")as String?)
+                }
+            }
+            email= user.email.toString()
         }
 
         button.setOnClickListener {
@@ -67,9 +73,12 @@ class ActivityCreateProfile : AppCompatActivity() {
                       "spotify" to spotifytxt,
                       "youtube" to yttxt)
               )
+
+            val profileUpdates = userProfileChangeRequest {
+                displayName = name
+            }
+            user!!.updateProfile(profileUpdates)
             val homeIntent = Intent(this,Profile::class.java)
-            homeIntent.putExtra("email",email)
-            homeIntent.putExtra("name",name)
             startActivity(homeIntent)
         }
     }

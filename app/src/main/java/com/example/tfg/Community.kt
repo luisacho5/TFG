@@ -7,18 +7,22 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.*
+import com.google.firebase.ktx.Firebase
 
 class Community : AppCompatActivity() {
     private val db= FirebaseFirestore.getInstance()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MyAdapter
     private lateinit var users: ArrayList<User>
+    private val user= Firebase.auth.currentUser
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community)
-        val email: String? = intent.getStringExtra("email")
-        val name:String?=intent.getStringExtra("name")
+        val email: String? = user!!.email
+        val name:String?=user.displayName
         recyclerView= findViewById(R.id.lista_users)
         users= arrayListOf()
         adapter= MyAdapter(users)
@@ -32,8 +36,6 @@ class Community : AppCompatActivity() {
             when (item.itemId) {
                 R.id.profile -> {
                     val homeIntent = Intent(this, Profile::class.java)
-                    homeIntent.putExtra("email", email)
-                    homeIntent.putExtra("name", name)
                     startActivity(homeIntent)
                     true
                 }
@@ -46,15 +48,11 @@ class Community : AppCompatActivity() {
                 }
                 R.id.comunidad -> {
                     val homeIntent = Intent(this, Community::class.java)
-                    homeIntent.putExtra("email", email)
-                    homeIntent.putExtra("name", name)
                     startActivity(homeIntent)
                     true
                 }
                 else -> {
                     val homeIntent = Intent(this, Mapa::class.java)
-                    homeIntent.putExtra("email", email)
-                    homeIntent.putExtra("name", name)
                     startActivity(homeIntent)
                     true
                 }

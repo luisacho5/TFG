@@ -21,9 +21,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".ShowProfile"
+            android:exported="false" />
+        <activity
             android:name=".Community"
             android:exported="false"
-            android:label="COMUNIDAD"/>
+            android:label="COMUNIDAD" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

@@ -29,6 +29,16 @@ class Community : AppCompatActivity() {
         recyclerView.layoutManager=LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter=adapter
+
+        adapter.setOnItemClickListener(object : MyAdapter.OnItemClickListener{
+            override fun onItemClick(position: Int) {
+                val homeIntent = Intent(this@Community, ShowProfile::class.java)
+                homeIntent.putExtra("email", users.get(position).email)
+                homeIntent.putExtra("name", users.get(position).name)
+                startActivity(homeIntent)
+            }
+
+        })
         initialize()
 
         val navigation: BottomNavigationView = findViewById(R.id.menu)

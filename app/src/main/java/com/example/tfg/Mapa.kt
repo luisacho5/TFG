@@ -24,7 +24,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.*
 import com.google.firebase.ktx.Firebase
 
-class Mapa : AppCompatActivity(), GoogleMap.OnMarkerClickListener, OnMapReadyCallback,GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
+class Mapa : AppCompatActivity(),
+    GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback,GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
 
     private lateinit var map: GoogleMap
     private lateinit var binding: ActivityMapaBinding
@@ -84,7 +85,7 @@ class Mapa : AppCompatActivity(), GoogleMap.OnMarkerClickListener, OnMapReadyCal
         map.setOnMyLocationClickListener(this)
         enableLocation()
         initialize()
-        map.setOnMarkerClickListener(this)
+        map.setOnInfoWindowClickListener(this)
 
     }
 
@@ -207,13 +208,12 @@ class Mapa : AppCompatActivity(), GoogleMap.OnMarkerClickListener, OnMapReadyCal
             } )
     }
 
-    override fun onMarkerClick(p0: Marker): Boolean {
+    override fun onInfoWindowClick(p0: Marker) {
         val user:User= p0.tag as User
         val homeIntent = Intent(this, ShowProfile::class.java)
         homeIntent.putExtra("email", user.email)
         homeIntent.putExtra("name", user.name)
         startActivity(homeIntent)
-        return true
     }
 
 }

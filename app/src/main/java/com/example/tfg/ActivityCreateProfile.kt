@@ -27,7 +27,8 @@ class ActivityCreateProfile : AppCompatActivity() {
         val twitter : TextView = findViewById(R.id.twitterUser)
         val spotify : TextView = findViewById(R.id.spotifyUser)
         val youtube : TextView = findViewById(R.id.youtubeUser)
-
+        var latitud: Double? = 0.0
+        var longitud: Double? =0.0
         val user = Firebase.auth.currentUser
         if (user != null) {
             user.email?.let {
@@ -38,6 +39,8 @@ class ActivityCreateProfile : AppCompatActivity() {
                     youtube.setText(it.get("youtube") as String?)
                     facebook.setText(it.get("facebook") as String?)
                     bio.setText(it.get("biografia")as String?)
+                    latitud = it.get("latitud")as Double?
+                    longitud = it.get("longitud")as Double?
                 }
             }
             email= user.email.toString()
@@ -71,7 +74,9 @@ class ActivityCreateProfile : AppCompatActivity() {
                       "facebook" to fbtxt,
                       "twitter" to twtrtxt,
                       "spotify" to spotifytxt,
-                      "youtube" to yttxt)
+                      "youtube" to yttxt,
+                      "latitud" to latitud,
+                      "longitud" to longitud)
               )
 
             val profileUpdates = userProfileChangeRequest {

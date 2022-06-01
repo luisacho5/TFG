@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -31,28 +32,51 @@ class ShowProfile : AppCompatActivity() {
         db.collection("users").document(email!!).get().addOnSuccessListener {
             textViewName.setText(it.get("name") as String?)
 
-            val facebook: Uri = Uri.parse(it.get("facebook") as String?)
-            val i = Intent(Intent.ACTION_VIEW, facebook)
-            facebookImg.setOnClickListener {
-                startActivity(i)
+            val fb:String?=it.get("facebook") as String?
+            if(!fb.equals("")){
+                facebookImg.visibility= View.VISIBLE
+                val facebook: Uri = Uri.parse(fb)
+                val i = Intent(Intent.ACTION_VIEW, facebook)
+                facebookImg.setOnClickListener {
+                    startActivity(i)
+                }
+            }else{
+                facebookImg.visibility= View.INVISIBLE
             }
 
-            val spotify: Uri = Uri.parse(it.get("spotify") as String?)
-            val i2 = Intent(Intent.ACTION_VIEW, spotify)
-            spotifyImg.setOnClickListener {
-                startActivity(i2)
+
+            val spotify: String? = it.get("spotify") as String?
+            if(!spotify.equals("")) {
+                spotifyImg.visibility= View.VISIBLE
+                val i2 = Intent(Intent.ACTION_VIEW, Uri.parse(spotify))
+                spotifyImg.setOnClickListener {
+                    startActivity(i2)
+                }
+            }else{
+                spotifyImg.visibility= View.INVISIBLE
             }
 
-            val twitter: Uri = Uri.parse(it.get("twitter") as String?)
-            val i3 = Intent(Intent.ACTION_VIEW, twitter)
-            twitterImg.setOnClickListener {
-                startActivity(i3)
+            val twitter: String?= it.get("twitter") as String?
+            if(!twitter.equals("")) {
+                twitterImg.visibility= View.VISIBLE
+                val i3 = Intent(Intent.ACTION_VIEW, Uri.parse(twitter))
+                twitterImg.setOnClickListener {
+                    startActivity(i3)
+                }
+            }
+            else{
+                twitterImg.visibility= View.INVISIBLE
             }
 
-            val yt: Uri = Uri.parse(it.get("youtube") as String?)
-            val i4 = Intent(Intent.ACTION_VIEW, yt)
-            youtubeImg.setOnClickListener {
-                startActivity(i4)
+            val yt: String? = it.get("youtube") as String?
+            if(!yt.equals("")) {
+                youtubeImg.visibility= View.VISIBLE
+                val i4 = Intent(Intent.ACTION_VIEW, Uri.parse(yt))
+                youtubeImg.setOnClickListener {
+                    startActivity(i4)
+                }
+            }else{
+                youtubeImg.visibility= View.INVISIBLE
             }
 
             textViewRol.setText(it.get("rol") as String?)

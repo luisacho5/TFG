@@ -72,7 +72,7 @@ class Profile : AppCompatActivity() {
                     }
 
                     val yt: String? = it.get("youtube") as String?
-                    if(yt.equals("")) {
+                    if(!yt.equals("")) {
                         youtubeImg.visibility=View.VISIBLE
                         val i4 = Intent(Intent.ACTION_VIEW, Uri.parse(yt))
                         youtubeImg.setOnClickListener {

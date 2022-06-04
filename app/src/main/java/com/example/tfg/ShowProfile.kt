@@ -27,7 +27,6 @@ class ShowProfile : AppCompatActivity() {
         val spotifyImg: ImageView = findViewById(R.id.imageView7)
         val youtubeImg: ImageView = findViewById(R.id.imageView8)
         val twitterImg: ImageView = findViewById(R.id.imageEmail)
-        val editImg: ImageView = findViewById(R.id.editImage)
         val foto: ImageView = findViewById(R.id.foto)
         val email: String? = intent.getStringExtra("email")
 

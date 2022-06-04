@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class MyAdapter(private val userList:ArrayList<User> ):
     RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
@@ -34,6 +36,7 @@ class MyAdapter(private val userList:ArrayList<User> ):
         holder.name.text=user.name
         holder.mail.text=user.email
         holder.rol.text=user.rol
+        Glide.with(holder.foto.context).load(user.foto).into(holder.foto)
 
     }
 
@@ -45,6 +48,7 @@ class MyAdapter(private val userList:ArrayList<User> ):
         val name: TextView = itemView.findViewById(R.id.tv_name)
         val mail: TextView = itemView.findViewById(R.id.tv_email)
         val rol: TextView = itemView.findViewById(R.id.tv_rol)
+        val foto: ImageView = itemView.findViewById(R.id.iv_avatar)
 
         init {
             itemView.setOnClickListener {

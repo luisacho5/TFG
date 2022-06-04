@@ -11,6 +11,7 @@ data class User(val email:String,
                 val spotify:String,
                 val youtube:String,
                 val latitud:Double,
-                val longitud: Double){
-    constructor() : this("","","","","","","","",0.0,0.0)
+                val longitud: Double,
+                val foto:String){
+    constructor() : this("","","","","","","","",0.0,0.0,"")
 }

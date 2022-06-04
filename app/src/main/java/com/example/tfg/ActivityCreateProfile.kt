@@ -76,7 +76,8 @@ class ActivityCreateProfile : AppCompatActivity() {
                       "spotify" to spotifytxt,
                       "youtube" to yttxt,
                       "latitud" to latitud,
-                      "longitud" to longitud)
+                      "longitud" to longitud,
+                        "foto" to "https://loremflickr.com/320/240/rockmusic")
               )
 
             val profileUpdates = userProfileChangeRequest {

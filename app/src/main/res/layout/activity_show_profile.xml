@@ -52,8 +52,9 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
+
                 <ImageView
-                    android:id="@+id/editImage"
+                    android:id="@+id/foto"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"

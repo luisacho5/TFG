@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,6 +28,7 @@ class ShowProfile : AppCompatActivity() {
         val youtubeImg: ImageView = findViewById(R.id.imageView8)
         val twitterImg: ImageView = findViewById(R.id.imageEmail)
         val editImg: ImageView = findViewById(R.id.editImage)
+        val foto: ImageView = findViewById(R.id.foto)
         val email: String? = intent.getStringExtra("email")
 
         db.collection("users").document(email!!).get().addOnSuccessListener {
@@ -81,6 +83,7 @@ class ShowProfile : AppCompatActivity() {
 
             textViewRol.setText(it.get("rol") as String?)
             textViewBio.setText(it.get("biografia") as String?)
+            Glide.with(this).load(it.get("foto") as String?).into(foto)
         }
 
         val navigation: BottomNavigationView = findViewById(R.id.menu)

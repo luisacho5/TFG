@@ -58,6 +58,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 app:srcCompat="@drawable/ic_edit" />
+            <ImageView
+                android:id="@+id/foto"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                />
         </LinearLayout>
 
 

@@ -97,13 +97,6 @@ class Profile : AppCompatActivity() {
                     startActivity(homeIntent)
                     true
                 }
-                R.id.chat->{
-                    val homeIntent = Intent(this,Chat::class.java)
-                    homeIntent.putExtra("email",user!!.email)
-                    homeIntent.putExtra("name",textViewName.text)
-                    startActivity(homeIntent)
-                    true
-                }
                 R.id.comunidad->{
                     val homeIntent = Intent(this,Community::class.java)
                     homeIntent.putExtra("email",user!!.email)

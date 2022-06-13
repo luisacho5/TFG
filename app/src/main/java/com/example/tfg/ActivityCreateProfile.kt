@@ -39,16 +39,14 @@ class ActivityCreateProfile : AppCompatActivity() {
                     youtube.setText(it.get("youtube") as String?)
                     facebook.setText(it.get("facebook") as String?)
                     bio.setText(it.get("biografia")as String?)
-                    if( it.get("latitud")as Double? == null){
-                        latitud = 0.0
-                    }else{
-                        latitud = it.get("latitud")as Double?
-                    }
-                    if( it.get("longitud")as Double? == null){
-                        longitud = 0.0
-                    }else{
-                        longitud = it.get("longitud")as Double?
-                    }
+                    latitud = it.get("latitud")as Double?
+                    longitud = it.get("longitud")as Double?
+                }
+                if (latitud==null){
+                    latitud= 0.0
+                }
+                if(longitud==null) {
+                    longitud = 0.0
                 }
             }
             email= user.email.toString()

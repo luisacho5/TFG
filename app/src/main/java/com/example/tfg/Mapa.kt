@@ -194,7 +194,7 @@ class Mapa : AppCompatActivity(),
                         if(dc.type == DocumentChange.Type.ADDED){
                            val user=dc.document.toObject(User::class.java)
                             if(!user.name.equals(name)) {
-                                createMarker(LatLng(user.latitud, user.longitud), user.name,user)
+                                createMarker(LatLng(user.latitud!!, user.longitud!!), user.name,user)
                             }
                         }
                     }
